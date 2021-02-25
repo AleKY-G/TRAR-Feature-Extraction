@@ -54,7 +54,7 @@ We also release the configuration (`configs/R-50-updn.yaml`) for training the re
 ## Feature Extraction
 Grid feature extraction can be done by simply running once the model is trained (or you can directly download our pre-trained models, see below):
 ```bash
-python extract_grid_feature.py -config-file configs/R-50-grid.yaml --dataset <dataset>
+python extract_grid_feature.py --config-file configs/R-50-grid.yaml --dataset <dataset>
 ```
 and the code will load the final model from `cfg.OUTPUT_DIR` (which one can override in command line) and start extracting features for `<dataset>`, we provide three options for the dataset: `coco_2014_train`, `coco_2014_val` and `coco_2015_test`, they correspond to `train`, `val` and `test` splits of the VQA dataset. The extracted features can be conveniently loaded in [Pythia](https://github.com/facebookresearch/pythia).
 
@@ -69,6 +69,18 @@ We release several pre-trained models for grid features: one with R-50 backbone,
 | X-101    | 4.3 | <a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-101/X-101.pth">model</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-101/metrics.json">metrics</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-101/X-101-features.tgz">features</a> |
 | X-152    | 4.7 | <a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/X-152.pth">model</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/metrics.json">metrics</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/X-152-features.tgz">features</a> |
 | X-152++  | 3.7 | <a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152pp/X-152pp.pth">model</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152pp/metrics.json">metrics</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152pp/X-152pp-features.tgz">features</a> |
+
+## Some Addition of this Fork
+
+- json-file builder: help you to build your own json file with coco format for extracting features
+- some annotations help you to control the extraction process with your own style
+
+#### Usage
+
+- use [json_file_builder.py](https://github.com/rentainhe/grid-feats-vqa/blob/master/json_file_builder.py) to build the `json` file of your own dataset, you only need two params
+  - __file_path__: where is the original image file
+  - __save_path__: where to store you json file (example: '/example.json')
+- register your own dataset in [detectron2.data.datasets.builtin.py](https://github.com/facebookresearch/detectron2/blob/master/detectron2/data/datasets/builtin.py) , this file is under your own virtual environments and then do the extraction
 
 ## License
 

@@ -52,6 +52,10 @@ def extract_grid_feature_on_dataset(model, data_loader, dump_folder):
             images = model.preprocess_image(inputs)
             features = model.backbone(images.tensor)
             outputs = model.roi_heads.get_conv5_features(features)
+
+            # you can add some operation to control the outputs, like conv2d, maxpool2d, avgpool2d
+            # save as np.float16 can help you to save the memory
+
             with PathManager.open(os.path.join(dump_folder, file_name), "wb") as f:
                 # save as CPU tensors
                 torch.save(outputs.cpu(), f)
