@@ -19,7 +19,9 @@ For more sustained maintenance, we release code using [Detectron2](https://githu
 ## Updates
 ***24/07/2021***
 
-Add [extract_trar_grid_feature.py]() for preparing grid features for [TRAR]() training, please check the [details]()
+Congratulations for our ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"]()
+
+Add [extract_trar_grid_feature.py](https://github.com/rentainhe/grid-feats-vqa/blob/master/extract_trar_grid_feature.py) for extracting features for TRAR training, please check the [TRAR_FEATURE_EXTRACTION](https://github.com/rentainhe/grid-feats-vqa/blob/master/TRAR_FEATURE_EXTRACTION.md) for more details.
 
 ***14/02/2021***
 
