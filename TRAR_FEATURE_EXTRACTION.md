@@ -54,3 +54,8 @@ python extract_trar_grid_feature.py --config-file configs/R-50-grid.yaml --datas
 - `--downsample=int`, default: `--downsample=2`, e.g., downsample ratio for extracted features, set downsample to 2 to get 16*16 features
 
 and the code will load the model weight from `args.weight_path` (which one can override in command line) and start extracting features for `<dataset>` and save the extracted features to `args.output_dir`, we provide three options for the dataset: `coco_2014_train`, `coco_2014_val` and `coco_2015_test`, they correspond to `train`, `val` and `test` splits of the VQA dataset. The extracted features can be conveniently loaded in [Pythia](https://github.com/facebookresearch/pythia).
+
+- For example: Extract `coco_2014_train` features using `pretrained ResNext152` Model
+```
+CUDA_VISIBLE_DEVICES=0 python extract_trar_grid_feature.py --config-file configs/X-152-grid.yaml --dataset coco_2014_train --weight_path ./weight/X-152.pth --output_dir ./data/
+```
