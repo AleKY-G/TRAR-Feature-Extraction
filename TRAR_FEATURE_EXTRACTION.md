@@ -46,10 +46,11 @@ datasets/coco/
 ### Feature Extraction
 Grid feature extraction can be done by simply running once the model is trained (or you can directly download our pre-trained models, see below):
 ```bash
-python extract_trar_grid_feature.py --config-file configs/R-50-grid.yaml --dataset <dataset> --output_dir /path/to/save/features --weight_path /path/to/pretrained/model
+python extract_trar_grid_feature.py --config-file configs/R-50-grid.yaml --dataset <dataset> --output_dir /path/to/save/features --weight_path /path/to/pretrained/model --downsample 2
 ```
 - `--dataset={'coco_train_2014', 'coco_val_2014', 'coco_test_2015'}`, e.g., to set the dataset to be extracted
 - `--output_dir=str`, e.g., where to save the extracted features
 - `--weight_path=str`, e.g., where to load the pretrained model weight
+- `--downsample=int`, default: `--downsample=2`, e.g., downsample ratio for extracted features, set downsample to 2 to get 16*16 features
 
 and the code will load the model weight from `args.weight_path` (which one can override in command line) and start extracting features for `<dataset>` and save the extracted features to `args.output_dir`, we provide three options for the dataset: `coco_2014_train`, `coco_2014_val` and `coco_2015_test`, they correspond to `train`, `val` and `test` splits of the VQA dataset. The extracted features can be conveniently loaded in [Pythia](https://github.com/facebookresearch/pythia).
