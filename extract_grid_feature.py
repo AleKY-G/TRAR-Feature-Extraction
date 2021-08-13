@@ -20,8 +20,6 @@ from grid_feats import (
     add_attribute_config,
     build_detection_test_loader_with_attributes,
 )
-from utils import TRAR_Preprocess
-import numpy as np
 
 # A simple mapper from object detection dataset to VQA dataset names
 dataset_to_folder_mapper = {}
@@ -37,9 +35,6 @@ def extract_grid_feature_argument_parser():
     parser.add_argument("--config-file", default="", metavar="FILE", help="path to config file")
     parser.add_argument("--dataset", help="name of the dataset", default="coco_2014_train",
                         choices=['coco_2014_train', 'coco_2014_val', 'coco_2015_test'])
-    parser.add_argument("--output_dir", type=str, default="", metavar="PATH", required=True, help="path to save the extracted feature")
-    parser.add_argument("--weight_path", type=str, default="", metavar="FILE", required=True, help="path to the pretrained model weight")
-    parser.add_argument("--downsample", type=int, default=2, help="downsample ratios")
     parser.add_argument(
         "opts",
         help="Modify config options using the command-line",
@@ -48,44 +43,29 @@ def extract_grid_feature_argument_parser():
     )
     return parser
 
-def extract_grid_feature_on_dataset(model, data_loader, dump_folder, args):
+def extract_grid_feature_on_dataset(model, data_loader, dump_folder):
     for idx, inputs in enumerate(tqdm.tqdm(data_loader)):
         with torch.no_grad():
             image_id = inputs[0]['image_id']
-            # file_name = '%d.pth' % image_id
-            file_name = '%s.npy' % image_id
+            file_name = '%d.pth' % image_id
             # compute features
             images = model.preprocess_image(inputs)
             features = model.backbone(images.tensor)
-            outputs = model.roi_heads.get_conv5_features(features) # (1, 2048, h, w)
+            outputs = model.roi_heads.get_conv5_features(features)
 
             # you can add some operation to control the outputs, like conv2d, maxpool2d, avgpool2d
-            # save as np.float16 can help you to save more memory
-            # TRAR Pre-process
-            outputs = TRAR_Preprocess(outputs, downsample=args.downsample)
-            outputs = outputs.astype(np.float16)
-
-
+            # save as np.float16 can help you to save the memory
 
             with PathManager.open(os.path.join(dump_folder, file_name), "wb") as f:
                 # save as CPU tensors
-                # torch.save(outputs.cpu(), f)
+                torch.save(outputs.cpu(), f)
 
-                # save as np.ndarray
-                np.save(f,outputs)
-
-def do_feature_extraction(cfg, model, args):
-    dataset_name = args.dataset
+def do_feature_extraction(cfg, model, dataset_name):
     with inference_context(model):
-        # edit config file
-        cfg.defrost()
-        cfg.OUTPUT_DIR = args.output_dir
-        cfg.freeze()
-
         dump_folder = os.path.join(cfg.OUTPUT_DIR, "features", dataset_to_folder_mapper[dataset_name])
         PathManager.mkdirs(dump_folder)
         data_loader = build_detection_test_loader_with_attributes(cfg, dataset_name)
-        extract_grid_feature_on_dataset(model, data_loader, dump_folder, args)
+        extract_grid_feature_on_dataset(model, data_loader, dump_folder)
 
 def setup(args):
     """
@@ -105,15 +85,10 @@ def setup(args):
 def main(args):
     cfg = setup(args)
     model = build_model(cfg)
-    # edit config file
-    cfg.defrost()
-    cfg.MODEL.WEIGHTS = args.weight_path
-    cfg.freeze()
-
     DetectionCheckpointer(model, save_dir=cfg.OUTPUT_DIR).resume_or_load(
         cfg.MODEL.WEIGHTS, resume=True
     )
-    do_feature_extraction(cfg, model, args)
+    do_feature_extraction(cfg, model, args.dataset)
 
 
 if __name__ == "__main__":
