@@ -36,13 +36,15 @@ def Padding2D(input, height, width):
     return output
 
 
-def TRAR_Preprocess(img_feat, downsample=2):
+def TRAR_Preprocess(img_feat, feature_size=8):
     img_feat = Transpose_tensor(img_feat)
     img_feat = Padding2D(img_feat, 32, 32)
-    if downsample == 2:
+    if feature_size == 16:
         img_feat = F.max_pool2d(img_feat, kernel_size=2, stride=2)
-    elif downsample == 4:
+    elif feature_size == 8:
         img_feat = F.max_pool2d(img_feat, kernel_size=2, stride=2)
         img_feat = F.max_pool2d(img_feat, kernel_size=2, stride=2)
+    _, c, h, w = img_feat.size()
+    img_feat = img_feat.view(_, c, -1).transpose(-1, -2)
     img_feat = img_feat.cpu()
     return img_feat[0].numpy()

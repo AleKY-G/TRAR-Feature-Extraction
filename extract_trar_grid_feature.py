@@ -39,7 +39,7 @@ def extract_grid_feature_argument_parser():
                         choices=['coco_2014_train', 'coco_2014_val', 'coco_2015_test'])
     parser.add_argument("--output_dir", type=str, default="", metavar="PATH", required=True, help="path to save the extracted feature")
     parser.add_argument("--weight_path", type=str, default="", metavar="FILE", required=True, help="path to the pretrained model weight")
-    parser.add_argument("--downsample", type=int, default=2, help="downsample ratios")
+    parser.add_argument("--feature_size", type=int, default=8, help="downsample ratios")
     parser.add_argument(
         "opts",
         help="Modify config options using the command-line",
@@ -61,16 +61,12 @@ def extract_grid_feature_on_dataset(model, data_loader, dump_folder, args):
 
             # you can add some operation to control the outputs, like conv2d, maxpool2d, avgpool2d
             # save as np.float16 can help you to save more memory
+            
             # TRAR Pre-process
-            outputs = TRAR_Preprocess(outputs, downsample=args.downsample)
+            outputs = TRAR_Preprocess(outputs, feature_size=args.feature_size)
             outputs = outputs.astype(np.float16)
 
-
-
             with PathManager.open(os.path.join(dump_folder, file_name), "wb") as f:
-                # save as CPU tensors
-                # torch.save(outputs.cpu(), f)
-
                 # save as np.ndarray
                 np.save(f,outputs)
 
