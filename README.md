@@ -16,6 +16,30 @@ This is a feature pre-training code release of the [paper](https://arxiv.org/abs
 ```
 For more sustained maintenance, we release code using [Detectron2](https://github.com/facebookresearch/detectron2) instead of [mask-rcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark) which the original code is based on. The current repository should reproduce the results reported in the paper, *e.g.*, reporting **~72.5** single model VQA score for a X-101 backbone paired with [MCAN](https://github.com/MILVLG/mcan-vqa)-large.
 
+## Updates
+***24/07/2021***
+
+Congratulations for our ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"]()
+
+Add [extract_trar_grid_feature.py](https://github.com/rentainhe/grid-feats-vqa/blob/master/extract_trar_grid_feature.py) for extracting features for TRAR training, please check the [TRAR_FEATURE_EXTRACTION](https://github.com/rentainhe/grid-feats-vqa/blob/master/TRAR_FEATURE_EXTRACTION.md) for more details.
+
+***14/02/2021***
+
+Initial commits:
+
+Add some useful tool for building annotations, which can help you to extract features from raw pictures
+- json-file builder: help you to build your own json file with coco format for extracting features
+- some annotations help you to control the extraction process with your own style
+
+**Usage**
+
+- use [json_file_builder.py](https://github.com/rentainhe/grid-feats-vqa/blob/master/json_file_builder.py) to build the `json` file of your own dataset, you only need two params
+  - __file_path__: where is the original image file
+  - __save_path__: where to store you json file (example: '/example.json')
+- register your own dataset in [detectron2.data.datasets.builtin.py](https://github.com/facebookresearch/detectron2/blob/master/detectron2/data/datasets/builtin.py) , this file is under your own virtual environments and then do the extraction
+
+
+
 ## Installation
 Install Detectron 2 following [INSTALL.md](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md). Since Detectron 2 is also being actively updated which can result in breaking behaviors, it is **highly recommended** to install via the following command:
 ```bash
@@ -70,17 +94,6 @@ We release several pre-trained models for grid features: one with R-50 backbone,
 | X-152    | 4.7 | <a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/X-152.pth">model</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/metrics.json">metrics</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/X-152-features.tgz">features</a> |
 | X-152++  | 3.7 | <a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152pp/X-152pp.pth">model</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152pp/metrics.json">metrics</a>&nbsp;\| &nbsp;<a href="https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152pp/X-152pp-features.tgz">features</a> |
 
-## Some Addition of this Fork
-
-- json-file builder: help you to build your own json file with coco format for extracting features
-- some annotations help you to control the extraction process with your own style
-
-#### Usage
-
-- use [json_file_builder.py](https://github.com/rentainhe/grid-feats-vqa/blob/master/json_file_builder.py) to build the `json` file of your own dataset, you only need two params
-  - __file_path__: where is the original image file
-  - __save_path__: where to store you json file (example: '/example.json')
-- register your own dataset in [detectron2.data.datasets.builtin.py](https://github.com/facebookresearch/detectron2/blob/master/detectron2/data/datasets/builtin.py) , this file is under your own virtual environments and then do the extraction
 
 ## License
 
