@@ -25,7 +25,7 @@ The file structure should look like:
 ```
 datasets/coco/
 ├── annotations
-│   ├── image_info_test2014.json
+│   ├── image_info_test2015.json
 |   ├── instances_train2014.json
 |   ├── instances_val2014.json
 |   ├── ......
