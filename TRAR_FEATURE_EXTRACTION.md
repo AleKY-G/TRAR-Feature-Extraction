@@ -11,8 +11,8 @@ Commits before or after `ffff8ac` might also work, but it could be risky.
 
 - Clone this repo
 ```bash
-git clone https://github.com/rentainhe/grid-feats-vqa.git
-cd grid-feats-vqa
+git clone https://github.com/rentainhe/TRAR-Feature-Extraction.git
+cd TRAR-Feature-Extraction
 mkdir datasets
 ```
 
