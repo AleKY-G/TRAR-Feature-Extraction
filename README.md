@@ -19,7 +19,7 @@ For more sustained maintenance, we release code using [Detectron2](https://githu
 ## Updates
 ***24/07/2021***
 
-Congratulations for our ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"]()
+Congratulations for our ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](https://openaccess.thecvf.com/content/ICCV2021/papers/Zhou_TRAR_Routing_the_Attention_Spans_in_Transformer_for_Visual_Question_ICCV_2021_paper.pdf)
 
 Add [extract_trar_grid_feature.py](https://github.com/rentainhe/grid-feats-vqa/blob/master/extract_trar_grid_feature.py) for extracting features for TRAR training, please check the [TRAR_FEATURE_EXTRACTION](https://github.com/rentainhe/grid-feats-vqa/blob/master/TRAR_FEATURE_EXTRACTION.md) for more details.
 
